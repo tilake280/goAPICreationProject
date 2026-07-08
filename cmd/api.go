@@ -7,6 +7,7 @@ import (
 
 	"github.com/go-chi/chi/middleware"
 	"github.com/go-chi/chi/v5"
+	"github.com/tilake280/ecom/intenal/products"
 )
 
 // mount
@@ -28,6 +29,9 @@ func (app *application) mount() http.Handler {
 		w.Write([]byte("all good for now"))
 	})
 
+	productService := products.NewService()
+	productHandler := products.NewHandler(productService)
+	r.Get("/products", productHandler.ListProducts)
 	return r
 }
 
